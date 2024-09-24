@@ -12,3 +12,9 @@ docs/
 
 # Dotenv file
 .env
+
+# db
+*.db
+
+# built artifacts
+*.toml
