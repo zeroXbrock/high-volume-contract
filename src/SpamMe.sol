@@ -22,4 +22,8 @@ contract SpamMe {
             }
         }
     }
+
+    function tipCoinbase() public payable {
+        block.coinbase.transfer(msg.value);
+    }
 }
