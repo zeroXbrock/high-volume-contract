@@ -16,9 +16,10 @@ contract SpamMe {
 
     /// This should work with estimate_gas()
     function consumeGas(uint256 gas) public {
-        for (uint256 i = 0; i < (gas / 219); i++) {
+        uint256 m = gas / 217;
+        for (uint256 i = 0; i < m; i++) {
             assembly {
-                sstore(0x00, i)
+                sstore(0, 1)
             }
         }
     }
