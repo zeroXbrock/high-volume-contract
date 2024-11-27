@@ -16,10 +16,14 @@ contract SpamMe {
 
     /// This should work with estimate_gas()
     function consumeGas(uint256 gas) public {
-        uint256 m = gas / 217;
-        for (uint256 i = 0; i < m; i++) {
+        require(gas > 0, "Gas must be greater than 0");
+
+        uint256 iterations = (gas - 2600) / 149;
+        if (iterations == 0) iterations = 1;
+
+        for (uint256 i = 0; i < iterations; i++) {
             assembly {
-                sstore(0, 1)
+                sstore(0, 0) // Simple no-op to burn gas
             }
         }
     }

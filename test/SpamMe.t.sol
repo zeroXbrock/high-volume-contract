@@ -23,8 +23,9 @@ contract SpamTest is Test {
 
     function test_consumeGasAlt() public {
         spamMe.consumeGas(100000);
-        // spamMe.consumeGas(250000);
-        // spamMe.consumeGas(1750000);
+        spamMe.consumeGas(250000);
+        spamMe.consumeGas(1750000);
+        spamMe.consumeGas(29000000);
     }
 
     function testFuzz_AppendToInbox(bytes memory x) public {
