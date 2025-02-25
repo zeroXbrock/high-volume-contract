@@ -100,4 +100,14 @@ contract SpamMe {
     function tipCoinbase() public payable {
         block.coinbase.transfer(msg.value);
     }
+
+    function revertOddBlocks() public view {
+        if (block.timestamp % 2 != 0) {
+            revert("block was odd, and I don't like that");
+        }
+        // consume some gas
+        for (uint256 i = 0; i < 100; i++) {
+            Consumer.mload();
+        }
+    }
 }
