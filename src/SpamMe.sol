@@ -119,7 +119,7 @@ contract SpamMe {
             }
         } else if (method.equals("modexp")) {
             for (uint256 i = 0; i < iterations; i++) {
-                Consumer.modexp(10, 4, 1313);
+                Consumer.modexp(10, 4, 14);
             }
         } else if (method.equals("ecAdd")) {
             for (uint256 i = 0; i < iterations; i++) {
@@ -131,9 +131,15 @@ contract SpamMe {
             }
         } else if (method.equals("ecPairing")) {
             for (uint256 i = 0; i < iterations; i++) {
-                Consumer.ecPairing(hex"");
+                Consumer.ecPairing(
+                    hex"1b6e4577cc71df5e856ed88d2d14a464343f140b07693e3b08308570b28fd55b24198aa6ee0f5bfec020ad2ff15729434439e4af7554fa0f7395ee20cb926346246b8e8c771c3db7226a8066537632923d7d5a542f8e0d600e7f0195240f1ec513cbe706f9ba436dd4a781fab85fa2e9d82854446cf91182dcfa66eb68c4b7e72533a60b837f9cf4838c4c38f4f9c8988fee10c9895753e7925a86330e925db702f47f10f7da957cfcc613361ab6aaeb67f14d22c06eec14e47e36988c4ee06705a596bd22bbb13dc898acfdd420c88893dd09f7fd4875e8b3fb65b54ad9643f2847ab3c7d853e89cfdf520de28e1092c1955b7e17d9cba5808f047a3d6898fd2f64f057deda8bbb646d5b9864d9789a696abf2a42218f7af28baae517f5e45723bd3952d332068086b2079260b285896cb84c73ece3647094fac90d8b1374c21eebb3f8ea3c3d9147fa09e4506bcff1c222a02ea8b4904fc6df3bca1cc0505e133d9a4794eb099e9bdf82a6fecdb2e2e29b0867bf0fe557475dc758d796714e"
+                );
             }
         } else if (method.equals("blake2f")) {
+            Consumer.blake2f(
+                hex"0000000148c9bdf267e6096a3ba7ca8485ae67bb2bf894fe72f36e3cf1361d5f3af54fa5d182e6ad7f520e511f6c3e2b8c68059b6bbd41fbabd9831f79217e1319cde05b61626300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000300000000000000000000000000000001"
+            );
+        } else if (method.equals("blake2f_alt")) {
             uint32 rounds = 12;
 
             bytes32[2] memory h;
