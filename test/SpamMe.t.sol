@@ -28,8 +28,9 @@ contract SpamTest is Test {
         spamMe.consumeGas(29000000);
     }
 
-    function testFuzz_AppendToInbox(bytes memory x) public {
-        spamMe.appendToInbox(x);
-        assertEq(spamMe.inbox(), x);
+    function testFuzz_AppendToInbox(bytes memory input) public {
+        bytes memory prevInbox = spamMe.inbox();
+        spamMe.appendToInbox(input);
+        assertEq(abi.encodePacked(prevInbox, input), spamMe.inbox());
     }
 }
