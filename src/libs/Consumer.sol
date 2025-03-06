@@ -68,10 +68,10 @@ library Consumer {
 
     function ecrecover_() internal pure returns (address recovered) {
         recovered = ecrecover(
-            0x7b05e003631381b3ecd0222e748a7900c262a008c4b7f002ce4a9f0a19061953, //keccak256(bytes("recover this!")),
-            0x42,
-            0x0000000000000000000000000000000000000000000000000000000000000042, //bytes32(uint256(0x42)),
-            0x0000000000000000000000000000000000000000000000000000000000000042
+            0x84b9e10435e0bc5ea883d65dcc978b7d415228d21e4617775048722ef01a97e7,
+            0x1c,
+            0x7f05b09e99332068f90b5aa7233b53b9191ced11229aafe97f1a8d6e52af5dc5,
+            0x049979df9965db093de9cac6c4224bd5bce586510fae94edcc513f12328b0685
         );
     }
 
