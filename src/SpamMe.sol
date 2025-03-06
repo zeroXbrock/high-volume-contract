@@ -123,11 +123,11 @@ contract SpamMe {
             }
         } else if (method.equals("ecAdd")) {
             for (uint256 i = 0; i < iterations; i++) {
-                Consumer.ecAdd(42, 32, 55, 44);
+                Consumer.ecAdd(1, 2, 0, 0);
             }
         } else if (method.equals("ecMul")) {
             for (uint256 i = 0; i < iterations; i++) {
-                Consumer.ecMul(10, 10, 4);
+                Consumer.ecMul(1, 2, 1);
             }
         } else if (method.equals("ecPairing")) {
             for (uint256 i = 0; i < iterations; i++) {
