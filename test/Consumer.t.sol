@@ -5,7 +5,7 @@ import {Test, console} from "forge-std/Test.sol";
 import {Consumer} from "../src/libs/Consumer.sol";
 
 contract ConsumerTest is Test {
-    function test_ecrecover() public view {
+    function test_ecrecover() public pure {
         address res = Consumer.ecrecover_();
         assertEq(res, address(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266));
     }
@@ -58,7 +58,7 @@ contract ConsumerTest is Test {
         assert(res);
     }
 
-    function testBlake2() public view {
+    function test_blake2() public view {
         // https://github.com/ethereum/EIPs/blob/master/EIPS/eip-152.md#test-cases
         bytes memory res = Consumer.blake2f(
             hex"0000000148c9bdf267e6096a3ba7ca8485ae67bb2bf894fe72f36e3cf1361d5f3af54fa5d182e6ad7f520e511f6c3e2b8c68059b6bbd41fbabd9831f79217e1319cde05b61626300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000300000000000000000000000000000001"

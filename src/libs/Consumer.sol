@@ -110,7 +110,7 @@ library Consumer {
         uint256 y1,
         uint256 x2,
         uint256 y2
-    ) public view returns (uint256 x3, uint256 y3) {
+    ) internal view returns (uint256 x3, uint256 y3) {
         bytes memory input = abi.encodePacked(x1, y1, x2, y2);
         (bool ok, bytes memory out) = address(6).staticcall(input);
         require(ok, "Elliptic curve addition failed");
@@ -122,7 +122,7 @@ library Consumer {
         uint256 x,
         uint256 y,
         uint256 scalar
-    ) public view returns (uint256 xNew, uint256 yNew) {
+    ) internal view returns (uint256 xNew, uint256 yNew) {
         bytes memory input = abi.encodePacked(x, y, scalar);
         (bool ok, bytes memory out) = address(7).staticcall(input);
         require(ok, "Elliptic curve multiplication failed");
@@ -130,7 +130,7 @@ library Consumer {
         (xNew, yNew) = abi.decode(out, (uint256, uint256));
     }
 
-    function ecPairing(bytes memory input) public view returns (bool) {
+    function ecPairing(bytes memory input) internal view returns (bool) {
         (bool ok, bytes memory out) = address(8).staticcall(input);
         require(ok, "failed");
 
@@ -144,7 +144,7 @@ library Consumer {
         bytes32[4] memory m,
         bytes8[2] memory t,
         bool f
-    ) public view returns (bytes32[2] memory) {
+    ) internal view returns (bytes32[2] memory) {
         bytes32[2] memory output;
 
         bytes memory args = abi.encodePacked(
@@ -178,7 +178,9 @@ library Consumer {
         return out;
     }
 
-    function kzgPointEvaluation(bytes memory input) public view returns (bool) {
+    function kzgPointEvaluation(
+        bytes memory input
+    ) internal view returns (bool) {
         require(input.length == 192, "input length must be exactly 192 bytes");
         (bool success, bytes memory output) = address(0x0A).staticcall(input);
         require(success, "Point evaluation precompile failed");
