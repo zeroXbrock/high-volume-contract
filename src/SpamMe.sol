@@ -14,15 +14,19 @@ library Str {
 
 contract SpamMe {
     bytes public inbox;
+    uint256 sampleNum;
+    bytes sampleBytes;
 
     using Str for string;
 
-    function appendToInbox(bytes memory newMessage) public {
-        inbox = abi.encodePacked(inbox, newMessage);
+    constructor() {
+        inbox = "";
+        sampleNum = uint256(keccak256(abi.encodePacked("fourty-two")));
+        sampleBytes = abi.encodePacked("Hello, World!");
     }
 
-    constructor() {
-        inbox = "Hello, World!";
+    function appendToInbox(bytes memory newMessage) public {
+        inbox = abi.encodePacked(inbox, newMessage);
     }
 
     function consumeGas() public view {
@@ -95,6 +99,75 @@ contract SpamMe {
                 Consumer.caller();
             }
         }
+    }
+
+    function callPrecompile(
+        string memory method,
+        uint256 iterations
+    ) public view {
+        if (method.equals("hash_sha256")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.hash_sha256(sampleNum);
+            }
+        } else if (method.equals("hash_ripemd160")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.hash_ripemd160(sampleNum);
+            }
+        } else if (method.equals("identity")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.identity(sampleBytes);
+            }
+        } else if (method.equals("modexp")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.modexp(10, 4, 1313);
+            }
+        } else if (method.equals("ecAdd")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.ecAdd(42, 32, 55, 44);
+            }
+        } else if (method.equals("ecMul")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.ecMul(10, 10, 4);
+            }
+        } else if (method.equals("ecPairing")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.ecPairing(hex"");
+            }
+        } else if (method.equals("blake2f")) {
+            uint32 rounds = 12;
+
+            bytes32[2] memory h;
+            h[
+                0
+            ] = 0x48c9bdf267e6096a3ba7ca8485ae67bb2bf894fe72f36e3cf1361d5f3af54fa5;
+            h[
+                1
+            ] = 0xd182e6ad7f520e511f6c3e2b8c68059b6bbd41fbabd9831f79217e1319cde05b;
+
+            bytes32[4] memory m;
+            m[
+                0
+            ] = 0x6162630000000000000000000000000000000000000000000000000000000000;
+            m[1] = bytes32(0);
+            m[2] = bytes32(0);
+            m[3] = bytes32(0);
+
+            bytes8[2] memory t;
+            t[0] = 0x0300000000000000;
+            t[1] = 0;
+
+            bool f = true;
+
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.blake2f(rounds, h, m, t, f);
+            }
+        }
+        // else if (method.equals("kzgPointEvaluation")) {
+        //     // TODO: valid inputs
+        //     for (uint256 i = 0; i < iterations; i++) {
+        //         Consumer.kzgPointEvaluation();
+        //     }
+        // }
     }
 
     function tipCoinbase() public payable {
