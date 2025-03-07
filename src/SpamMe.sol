@@ -190,3 +190,45 @@ contract SpamMe {
         }
     }
 }
+
+contract ConsumerPublic {
+    function hash_sha256(uint256 num) public view {
+        Consumer.hash_sha256(num);
+    }
+
+    function hash_ripemd160(uint256 num) public view {
+        Consumer.hash_ripemd160(num);
+    }
+
+    function identity(bytes calldata data) public view {
+        Consumer.identity(data);
+    }
+
+    function modexp(
+        uint256 base,
+        uint256 exponent,
+        uint256 modulus
+    ) public view {
+        Consumer.modexp(base, exponent, modulus);
+    }
+
+    function ecAdd(uint256 x1, uint256 y1, uint256 x2, uint256 y2) public view {
+        Consumer.ecAdd(x1, y1, x2, y2);
+    }
+
+    function ecMul(uint256 x, uint256 y, uint256 scalar) public view {
+        Consumer.ecMul(x, y, scalar);
+    }
+
+    function ecPairing(bytes calldata data) public view {
+        Consumer.ecPairing(data);
+    }
+
+    function blake2f(bytes calldata data) public view {
+        Consumer.blake2f(data);
+    }
+
+    function kzgPointEvaluation(bytes calldata input) public view {
+        Consumer.kzgPointEvaluation(input);
+    }
+}
