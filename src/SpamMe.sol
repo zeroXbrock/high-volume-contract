@@ -189,6 +189,23 @@ contract SpamMe {
             Consumer.mload();
         }
     }
+
+    function revertIfTrue(
+        bool doRevert,
+        bytes calldata call_data
+    ) public returns (bytes memory) {
+        if (doRevert) {
+            revert("Reverted because doRevert was true");
+        }
+        if (call_data.length > 0) {
+            (bool success, bytes memory res) = address(this).call(call_data);
+            if (!success) {
+                revert("Reverted because call(call_data) failed");
+            }
+            return res;
+        }
+        return "";
+    }
 }
 
 contract ConsumerPublic {
