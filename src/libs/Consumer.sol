@@ -28,9 +28,22 @@ library Consumer {
         }
     }
 
+    function mstore8() internal pure {
+        assembly {
+            mstore8(0, 0)
+        }
+    }
+
     function mload() internal pure {
         assembly {
             let __ := mload(0)
+        }
+    }
+
+    function selfdestruct_() internal {
+        address self = msg.sender;
+        assembly {
+            selfdestruct(self)
         }
     }
 
@@ -59,6 +72,42 @@ library Consumer {
     function div() internal pure {
         assembly {
             let __ := div(0x13, 0x01)
+        }
+    }
+
+    function sdiv() internal pure {
+        assembly {
+            let __ := sdiv(0x13, 0x01)
+        }
+    }
+
+    function mod() internal pure {
+        assembly {
+            let __ := mod(0x42, 0x13)
+        }
+    }
+
+    function smod() internal pure {
+        assembly {
+            let __ := smod(0x42, 0x13)
+        }
+    }
+
+    function addmod_() internal pure {
+        assembly {
+            let __ := addmod(0x01, 0x02, 0x03)
+        }
+    }
+
+    function mulmod_() internal pure {
+        assembly {
+            let __ := mulmod(0x01, 0x02, 0x03)
+        }
+    }
+
+    function exp() internal pure {
+        assembly {
+            let __ := exp(0x02, 0x08)
         }
     }
 
@@ -484,6 +533,30 @@ library Consumer {
         }
     }
 
+    function callvalue() internal view {
+        assembly {
+            let ___ := callvalue()
+        }
+    }
+
+    function calldataload() internal pure {
+        assembly {
+            let ___ := calldataload(0)
+        }
+    }
+
+    function calldatasize() internal pure {
+        assembly {
+            let ___ := calldatasize()
+        }
+    }
+
+    function calldatacopy() internal pure {
+        assembly {
+            calldatacopy(0, 0, 0)
+        }
+    }
+
     function call(
         address to,
         uint256 value,
@@ -527,6 +600,12 @@ library Consumer {
     ) internal view returns (bool success) {
         assembly {
             success := staticcall(gas(), to, add(data, 32), mload(data), 0, 0)
+        }
+    }
+
+    function selfbalance_() internal view {
+        assembly {
+            let ___ := selfbalance()
         }
     }
 

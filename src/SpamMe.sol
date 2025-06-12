@@ -113,6 +113,10 @@ contract SpamMe {
             for (uint256 i = 0; i < iterations; i++) {
                 Consumer.mstore();
             }
+        } else if (method.equals("mstore8")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.mstore8();
+            }
         } else if (method.equals("mload")) {
             for (uint256 i = 0; i < iterations; i++) {
                 Consumer.mload();
@@ -133,11 +137,35 @@ contract SpamMe {
             for (uint256 i = 0; i < iterations; i++) {
                 Consumer.div();
             }
+        } else if (method.equals("sdiv")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.sdiv();
+            }
+        } else if (method.equals("mod")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.mod();
+            }
+        } else if (method.equals("smod")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.smod();
+            }
+        } else if (method.equals("addmod")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.addmod_();
+            }
+        } else if (method.equals("mulmod")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.mulmod_();
+            }
+        } else if (method.equals("exp")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.exp();
+            }
         } else if (method.equals("ecrecover")) {
             for (uint256 i = 0; i < iterations; i++) {
                 Consumer.ecrecover_();
             }
-        } else if (method.equals("keccak256")) {
+        } else if (method.equals("keccak256") || method.equals("sha3")) {
             for (uint256 i = 0; i < iterations; i++) {
                 Consumer.keccak256_();
             }
@@ -157,13 +185,9 @@ contract SpamMe {
             Consumer.revert0();
         } else if (method.equals("invalid")) {
             Consumer.invalid();
-        }
-        // else if (method.equals("selfdestruct")) {
-        //     for (uint256 i = 0; i < iterations; i++) {
-        //         Consumer.selfdestruct();
-        //     }
-        // }
-        else if (method.equals("address")) {
+        } else if (method.equals("selfdestruct")) {
+            Consumer.selfdestruct_();
+        } else if (method.equals("address")) {
             for (uint256 i = 0; i < iterations; i++) {
                 Consumer.address_();
             }
@@ -335,6 +359,22 @@ contract SpamMe {
                     abi.encodeWithSelector(this.getThis.selector)
                 );
             }
+        } else if (method.equals("callvalue")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.callvalue();
+            }
+        } else if (method.equals("calldataload")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.calldataload();
+            }
+        } else if (method.equals("calldatasize")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.calldatasize();
+            }
+        } else if (method.equals("calldatacopy")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.calldatacopy();
+            }
         } else if (method.equals("delegatecall")) {
             for (uint256 i = 0; i < iterations; i++) {
                 Consumer.delegatecall(
@@ -348,6 +388,10 @@ contract SpamMe {
                     address(this),
                     abi.encodeWithSelector(this.getThis.selector)
                 );
+            }
+        } else if (method.equals("selfbalance")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.selfbalance_();
             }
         } else if (method.equals("log0")) {
             bytes memory data = abi.encodePacked("logging is a worthwhile job");
