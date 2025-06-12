@@ -14,8 +14,8 @@ library Str {
 
 contract SpamMe {
     bytes public inbox;
-    uint256 sampleNum;
-    bytes sampleBytes;
+    uint256 public sampleNum;
+    bytes public sampleBytes;
 
     using Str for string;
 
@@ -35,6 +35,10 @@ contract SpamMe {
         }
     }
 
+    function getThis() public view returns (address) {
+        return address(this);
+    }
+
     /// This should work with estimate_gas()
     function consumeGas(uint256 gas) public {
         require(gas > 0, "Gas must be greater than 0");
@@ -45,6 +49,53 @@ contract SpamMe {
         for (uint256 i = 0; i < iterations; i++) {
             assembly {
                 sstore(0, 0) // Simple no-op to burn gas
+            }
+        }
+    }
+
+    function getStorageSlot(uint256 slot) public view returns (bytes32) {
+        bytes32 value;
+        assembly {
+            value := sload(slot)
+        }
+        return value;
+    }
+
+    /** Fills given storage slots with new values for each iteration. */
+    function fillStorageSlots(
+        uint256[] memory slots,
+        uint256 iterations
+    ) public {
+        require(slots.length > 0, "Slots array must not be empty");
+        require(iterations > 0, "Iterations must be greater than 0");
+
+        for (uint256 i = 0; i < iterations; i++) {
+            for (uint256 j = 0; j < slots.length; j++) {
+                uint256 slot = slots[j];
+                assembly {
+                    // fill storage slots with hash of the slot index
+                    let tmp := mul(add(i, 1), add(j, 1))
+                    mstore(0x00, tmp)
+                    let idxhash := keccak256(0x00, 0x20)
+                    sstore(slot, idxhash)
+                }
+            }
+        }
+    }
+
+    /** Fills a given number of storage slots with new values for each iteration. */
+    function fillStorageSlots(uint256 numSlots, uint256 iterations) public {
+        require(numSlots > 0, "Number of slots must be greater than 0");
+        require(iterations > 0, "Iterations must be greater than 0");
+
+        for (uint256 i = 0; i < iterations; i++) {
+            for (uint256 j = 0; j < numSlots; j++) {
+                assembly {
+                    let tmp := mul(add(i, 1), add(j, 1))
+                    mstore(0x00, tmp) // write (i + 1) * (j + 1) to memory at 0x00
+                    let idxhash := keccak256(0x00, 0x20)
+                    sstore(j, idxhash) // store the hash in storage slot j
+                }
             }
         }
     }
@@ -97,6 +148,246 @@ contract SpamMe {
         } else if (method.equals("caller")) {
             for (uint256 i = 0; i < iterations; i++) {
                 Consumer.caller();
+            }
+        } else if (method.equals("stop")) {
+            Consumer.stop();
+        } else if (method.equals("return")) {
+            Consumer.return0();
+        } else if (method.equals("revert")) {
+            Consumer.revert0();
+        } else if (method.equals("invalid")) {
+            Consumer.invalid();
+        }
+        // else if (method.equals("selfdestruct")) {
+        //     for (uint256 i = 0; i < iterations; i++) {
+        //         Consumer.selfdestruct();
+        //     }
+        // }
+        else if (method.equals("address")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.address_();
+            }
+        } else if (method.equals("origin")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.origin();
+            }
+        } else if (method.equals("gasprice")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.gasprice();
+            }
+        } else if (method.equals("gas")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.gas();
+            }
+        } else if (method.equals("codesize")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.codesize();
+            }
+        } else if (method.equals("codecopy")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.codecopy();
+            }
+        } else if (method.equals("extcodesize")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.extcodesize();
+            }
+        } else if (method.equals("extcodecopy")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.extcodecopy();
+            }
+        } else if (method.equals("extcodehash")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.extcodehash();
+            }
+        } else if (method.equals("returndatasize")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.returndatasize();
+            }
+        } else if (method.equals("returndatacopy")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.returndatacopy();
+            }
+        } else if (method.equals("blockHash")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.blockHash();
+            }
+        } else if (method.equals("coinbase")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.coinbase();
+            }
+        } else if (method.equals("timestamp")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.timestamp();
+            }
+        } else if (method.equals("number")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.number();
+            }
+        } else if (method.equals("prevrandao")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.prevrandao();
+            }
+        } else if (method.equals("gaslimit")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.gaslimit();
+            }
+        } else if (method.equals("chainid")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.chainid();
+            }
+        } else if (method.equals("basefee")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.basefee();
+            }
+        } else if (method.equals("pop")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.pop();
+            }
+        } else if (method.equals("signextend")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.signextend();
+            }
+        } else if (method.equals("byte")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.byte_();
+            }
+        } else if (method.equals("shl")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.shl();
+            }
+        } else if (method.equals("shr")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.shr();
+            }
+        } else if (method.equals("sar")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.sar();
+            }
+        } else if (method.equals("not")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.not_();
+            }
+        } else if (method.equals("and")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.and_();
+            }
+        } else if (method.equals("or")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.or_();
+            }
+        } else if (method.equals("xor")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.xor_();
+            }
+        } else if (method.equals("iszero")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.iszero();
+            }
+        } else if (method.equals("lt")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.lt();
+            }
+        } else if (method.equals("gt")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.gt();
+            }
+        } else if (method.equals("slt")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.slt();
+            }
+        } else if (method.equals("sgt")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.sgt();
+            }
+        } else if (method.equals("eq")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.eq();
+            }
+        } else if (method.equals("msize")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.msize();
+            }
+        } else if (method.equals("create")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.create(0, type(Consumer).creationCode);
+            }
+        } else if (method.equals("create2")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.create2(
+                    0,
+                    type(Consumer).creationCode,
+                    keccak256(abi.encodePacked(address(this)))
+                );
+            }
+        } else if (method.equals("call")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.call(
+                    address(this),
+                    0,
+                    abi.encodeWithSelector(this.sampleNum.selector)
+                );
+            }
+        } else if (method.equals("callcode")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.callcode(
+                    address(this),
+                    0,
+                    abi.encodeWithSelector(this.getThis.selector)
+                );
+            }
+        } else if (method.equals("delegatecall")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.delegatecall(
+                    address(this),
+                    abi.encodeWithSelector(this.getThis.selector)
+                );
+            }
+        } else if (method.equals("staticcall")) {
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.staticcall_(
+                    address(this),
+                    abi.encodeWithSelector(this.getThis.selector)
+                );
+            }
+        } else if (method.equals("log0")) {
+            bytes memory data = abi.encodePacked("logging is a worthwhile job");
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.log0(data);
+            }
+        } else if (method.equals("log1")) {
+            bytes memory data = abi.encodePacked("logging is a worthwhile job");
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.log1(data, bytes32(uint256(0xf00d)));
+            }
+        } else if (method.equals("log2")) {
+            bytes memory data = abi.encodePacked("logging is a worthwhile job");
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.log2(
+                    data,
+                    bytes32(uint256(0xf00d)),
+                    bytes32(uint256(0xdead))
+                );
+            }
+        } else if (method.equals("log3")) {
+            bytes memory data = abi.encodePacked("logging is a worthwhile job");
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.log3(
+                    data,
+                    bytes32(uint256(0xdead)),
+                    bytes32(uint256(0xbeef)),
+                    bytes32(uint256(0xface))
+                );
+            }
+        } else if (method.equals("log4")) {
+            bytes memory data = abi.encodePacked("logging is a worthwhile job");
+            for (uint256 i = 0; i < iterations; i++) {
+                Consumer.log4(
+                    data,
+                    bytes32(uint256(0xbeef)),
+                    bytes32(uint256(0xface)),
+                    bytes32(uint256(0xfeed)),
+                    bytes32(uint256(0xcafe))
+                );
             }
         }
     }
