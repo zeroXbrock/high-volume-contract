@@ -33,4 +33,9 @@ contract SpamTest is Test {
         spamMe.appendToInbox(input);
         assertEq(abi.encodePacked(prevInbox, input), spamMe.inbox());
     }
+
+    function test_consumeGasAndRevert() public {
+        vm.expectRevert();
+        spamMe.consumeGasAndRevert(120000);
+    }
 }

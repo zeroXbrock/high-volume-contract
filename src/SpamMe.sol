@@ -206,6 +206,11 @@ contract SpamMe {
         }
         return "";
     }
+
+    function consumeGasAndRevert(uint256 gas) public {
+        consumeGas(gas);
+        revert("not an error, I revert on purpose");
+    }
 }
 
 contract ConsumerPublic {
