@@ -65,4 +65,9 @@ contract SpamTest is Test {
             assertNotEq(slotVal, 0);
         }
     }
+
+    function test_consumeGasAndRevert() public {
+        vm.expectRevert();
+        spamMe.consumeGasAndRevert(120000);
+    }
 }
