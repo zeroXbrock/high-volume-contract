@@ -34,6 +34,38 @@ contract SpamTest is Test {
         assertEq(abi.encodePacked(prevInbox, input), spamMe.inbox());
     }
 
+    function test_fillStorage_num() public {
+        uint256 numSlots = 100;
+        spamMe.fillStorageSlots(numSlots, 1);
+        for (uint256 i = 0; i < numSlots; i++) {
+            bytes32 slotVal = spamMe.getStorageSlot(i);
+            assertNotEq(slotVal, 0);
+        }
+    }
+
+    function test_fillStorage_slots() public {
+        uint256[] memory slots = new uint256[](100);
+        for (uint256 i = 0; i < slots.length; i++) {
+            slots[i] = i;
+        }
+        spamMe.fillStorageSlots(slots, 1);
+        for (uint256 i = 0; i < slots.length; i++) {
+            bytes32 slotVal = spamMe.getStorageSlot(i);
+            assertNotEq(slotVal, 0);
+        }
+        uint256[] memory customSlots = new uint256[](4);
+        customSlots[0] = 0xf00d;
+        customSlots[1] = 0xdead;
+        customSlots[2] = 0xbeef;
+        customSlots[3] = 0xface;
+
+        spamMe.fillStorageSlots(customSlots, 1);
+        for (uint256 i = 0; i < customSlots.length; i++) {
+            bytes32 slotVal = spamMe.getStorageSlot(customSlots[i]);
+            assertNotEq(slotVal, 0);
+        }
+    }
+
     function test_consumeGasAndRevert() public {
         vm.expectRevert();
         spamMe.consumeGasAndRevert(120000);

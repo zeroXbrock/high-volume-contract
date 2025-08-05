@@ -28,9 +28,22 @@ library Consumer {
         }
     }
 
+    function mstore8() internal pure {
+        assembly {
+            mstore8(0, 0)
+        }
+    }
+
     function mload() internal pure {
         assembly {
             let __ := mload(0)
+        }
+    }
+
+    function selfdestruct_() internal {
+        address self = msg.sender;
+        assembly {
+            selfdestruct(self)
         }
     }
 
@@ -59,6 +72,42 @@ library Consumer {
     function div() internal pure {
         assembly {
             let __ := div(0x13, 0x01)
+        }
+    }
+
+    function sdiv() internal pure {
+        assembly {
+            let __ := sdiv(0x13, 0x01)
+        }
+    }
+
+    function mod() internal pure {
+        assembly {
+            let __ := mod(0x42, 0x13)
+        }
+    }
+
+    function smod() internal pure {
+        assembly {
+            let __ := smod(0x42, 0x13)
+        }
+    }
+
+    function addmod_() internal pure {
+        assembly {
+            let __ := addmod(0x01, 0x02, 0x03)
+        }
+    }
+
+    function mulmod_() internal pure {
+        assembly {
+            let __ := mulmod(0x01, 0x02, 0x03)
+        }
+    }
+
+    function exp() internal pure {
+        assembly {
+            let __ := exp(0x02, 0x08)
         }
     }
 
@@ -208,6 +257,396 @@ library Consumer {
     function caller() internal view {
         assembly {
             let ___ := caller()
+        }
+    }
+
+    // #####################################################################
+    // Additional Ethereum Opcodes
+    // #####################################################################
+
+    function stop() internal pure {
+        assembly {
+            stop()
+        }
+    }
+
+    function return0() internal pure {
+        assembly {
+            return(0, 0)
+        }
+    }
+
+    function revert0() internal pure {
+        assembly {
+            revert(0, 0)
+        }
+    }
+
+    function invalid() internal pure {
+        assembly {
+            invalid()
+        }
+    }
+
+    // function selfdestruct(address recipient) internal {
+    //     assembly {
+    //         selfdestruct(recipient)
+    //     }
+    // }
+
+    function address_() internal view {
+        assembly {
+            let ___ := address()
+        }
+    }
+
+    function origin() internal view {
+        assembly {
+            let ___ := origin()
+        }
+    }
+
+    function gasprice() internal view {
+        assembly {
+            let ___ := gasprice()
+        }
+    }
+
+    function gas() internal view {
+        assembly {
+            let ___ := gas()
+        }
+    }
+
+    function codesize() internal pure {
+        assembly {
+            let ___ := codesize()
+        }
+    }
+
+    function codecopy() internal pure {
+        assembly {
+            codecopy(0, 0, 0)
+        }
+    }
+
+    function extcodesize() internal view {
+        address a = address(this);
+        assembly {
+            let ___ := extcodesize(a)
+        }
+    }
+
+    function extcodecopy() internal view {
+        address a = address(this);
+        assembly {
+            extcodecopy(a, 0, 0, 0)
+        }
+    }
+
+    function extcodehash() internal view {
+        address a = address(this);
+        assembly {
+            let ___ := extcodehash(a)
+        }
+    }
+
+    function returndatasize() internal pure {
+        assembly {
+            let ___ := returndatasize()
+        }
+    }
+
+    function returndatacopy() internal pure {
+        assembly {
+            returndatacopy(0, 0, 0)
+        }
+    }
+
+    function blockHash() internal view {
+        uint256 blockNumber = block.number - 1; // Get the previous block hash
+        assembly {
+            let ___ := blockhash(blockNumber)
+        }
+    }
+
+    function coinbase() internal view {
+        assembly {
+            let ___ := coinbase()
+        }
+    }
+
+    function timestamp() internal view {
+        assembly {
+            let ___ := timestamp()
+        }
+    }
+
+    function number() internal view {
+        assembly {
+            let ___ := number()
+        }
+    }
+
+    function prevrandao() internal view {
+        assembly {
+            let ___ := prevrandao()
+        }
+    }
+
+    function gaslimit() internal view {
+        assembly {
+            let ___ := gaslimit()
+        }
+    }
+
+    function chainid() internal view {
+        assembly {
+            let ___ := chainid()
+        }
+    }
+
+    function basefee() internal view {
+        assembly {
+            let ___ := basefee()
+        }
+    }
+
+    function pop() internal pure {
+        assembly {
+            pop(0)
+        }
+    }
+
+    function signextend() internal pure {
+        assembly {
+            let ___ := signextend(0, 0)
+        }
+    }
+
+    function byte_() internal pure {
+        assembly {
+            let ___ := byte(0, 0)
+        }
+    }
+
+    function shl() internal pure {
+        assembly {
+            let ___ := shl(1, 1)
+        }
+    }
+
+    function shr() internal pure {
+        assembly {
+            let ___ := shr(1, 1)
+        }
+    }
+
+    function sar() internal pure {
+        assembly {
+            let ___ := sar(1, 1)
+        }
+    }
+
+    function not_() internal pure {
+        assembly {
+            let ___ := not(0)
+        }
+    }
+
+    function and_() internal pure {
+        assembly {
+            let ___ := and(1, 1)
+        }
+    }
+
+    function or_() internal pure {
+        assembly {
+            let ___ := or(1, 1)
+        }
+    }
+
+    function xor_() internal pure {
+        assembly {
+            let ___ := xor(1, 1)
+        }
+    }
+
+    function iszero() internal pure {
+        assembly {
+            let ___ := iszero(0)
+        }
+    }
+
+    function lt() internal pure {
+        assembly {
+            let ___ := lt(1, 2)
+        }
+    }
+
+    function gt() internal pure {
+        assembly {
+            let ___ := gt(2, 1)
+        }
+    }
+
+    function slt() internal pure {
+        assembly {
+            let ___ := slt(1, 2)
+        }
+    }
+
+    function sgt() internal pure {
+        assembly {
+            let ___ := sgt(2, 1)
+        }
+    }
+
+    function eq() internal pure {
+        assembly {
+            let ___ := eq(1, 1)
+        }
+    }
+
+    function msize() internal pure {
+        assembly {
+            let ___ := msize()
+        }
+    }
+
+    function create(
+        uint256 value,
+        bytes memory code
+    ) internal returns (address addr) {
+        assembly {
+            addr := create(value, add(code, 32), mload(code))
+        }
+    }
+
+    function create2(
+        uint256 value,
+        bytes memory code,
+        bytes32 salt
+    ) internal returns (address addr) {
+        assembly {
+            addr := create2(value, add(code, 32), mload(code), salt)
+        }
+    }
+
+    function callvalue() internal view {
+        assembly {
+            let ___ := callvalue()
+        }
+    }
+
+    function calldataload() internal pure {
+        assembly {
+            let ___ := calldataload(0)
+        }
+    }
+
+    function calldatasize() internal pure {
+        assembly {
+            let ___ := calldatasize()
+        }
+    }
+
+    function calldatacopy() internal pure {
+        assembly {
+            calldatacopy(0, 0, 0)
+        }
+    }
+
+    function call(
+        address to,
+        uint256 value,
+        bytes memory data
+    ) internal returns (bool success) {
+        assembly {
+            success := call(gas(), to, value, add(data, 32), mload(data), 0, 0)
+        }
+    }
+
+    function callcode(
+        address to,
+        uint256 value,
+        bytes memory data
+    ) internal returns (bool success) {
+        assembly {
+            success := callcode(
+                gas(),
+                to,
+                value,
+                add(data, 32),
+                mload(data),
+                0,
+                0
+            )
+        }
+    }
+
+    function delegatecall(
+        address to,
+        bytes memory data
+    ) internal returns (bool success) {
+        assembly {
+            success := delegatecall(gas(), to, add(data, 32), mload(data), 0, 0)
+        }
+    }
+
+    function staticcall_(
+        address to,
+        bytes memory data
+    ) internal view returns (bool success) {
+        assembly {
+            success := staticcall(gas(), to, add(data, 32), mload(data), 0, 0)
+        }
+    }
+
+    function selfbalance_() internal view {
+        assembly {
+            let ___ := selfbalance()
+        }
+    }
+
+    function log0(bytes memory data) internal {
+        assembly {
+            log0(add(data, 32), mload(data))
+        }
+    }
+
+    function log1(bytes memory data, bytes32 topic1) internal {
+        assembly {
+            log1(add(data, 32), mload(data), topic1)
+        }
+    }
+
+    function log2(bytes memory data, bytes32 topic1, bytes32 topic2) internal {
+        assembly {
+            log2(add(data, 32), mload(data), topic1, topic2)
+        }
+    }
+
+    function log3(
+        bytes memory data,
+        bytes32 topic1,
+        bytes32 topic2,
+        bytes32 topic3
+    ) internal {
+        assembly {
+            log3(add(data, 32), mload(data), topic1, topic2, topic3)
+        }
+    }
+
+    function log4(
+        bytes memory data,
+        bytes32 topic1,
+        bytes32 topic2,
+        bytes32 topic3,
+        bytes32 topic4
+    ) internal {
+        assembly {
+            log4(add(data, 32), mload(data), topic1, topic2, topic3, topic4)
         }
     }
 }
