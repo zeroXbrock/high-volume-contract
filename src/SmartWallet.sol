@@ -16,4 +16,8 @@ contract DelegatedSmartAccount {
             require(success, "call failed");
         }
     }
+
+    receive() external payable {}
+
+    fallback() external payable {}
 }
